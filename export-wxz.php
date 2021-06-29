@@ -201,6 +201,7 @@ class Export_WXZ {
 			$this->add_file(
 				'categories/' . intval( $c->term_id ) . '.json',
 				$this->json_encode( array(
+					'version' => 1,
 					'taxonomy' => $c->taxonomy,
 					'name' => $c->name,
 					'slug' => $c->slug,
@@ -215,6 +216,7 @@ class Export_WXZ {
 			$this->add_file(
 				'tags/' . intval( $t->term_id ) . '.json',
 				$this->json_encode( array(
+					'version' => 1,
 					'taxonomy' => $t->taxonomy,
 					'name' => $t->name,
 					'slug' => $t->slug,
@@ -228,6 +230,7 @@ class Export_WXZ {
 			$this->add_file(
 				'terms/' . intval( $t->term_id ) . '.json',
 				$this->json_encode( array(
+					'version' => 1,
 					'taxonomy' => $t->taxonomy,
 					'name' => $t->name,
 					'slug' => $t->slug,
@@ -290,6 +293,7 @@ class Export_WXZ {
 					$is_sticky = is_sticky( $post->ID ) ? 1 : 0;
 
 					$data = array(
+						'version' => 1,
 						'title' => $title,
 						'author' => get_the_author_meta( 'login' ),
 						'status' => $post->post_status,
@@ -337,6 +341,7 @@ class Export_WXZ {
 		}
 
 		return array(
+			'version' => 1,
 			'title' => get_bloginfo_rss( 'name' ),
 			'link' => get_bloginfo_rss( 'url' ),
 			'description' => get_bloginfo_rss( 'description' ),
@@ -376,6 +381,7 @@ class Export_WXZ {
 			$this->add_file(
 				'users/' . intval( $author->ID ) . '.json',
 				$this->json_encode( array(
+					'version' => 1,
 					'username' => $author->user_login,
 					'display_name' => $author->display_name,
 					'email' => $author->user_email,
