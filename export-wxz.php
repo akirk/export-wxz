@@ -5,6 +5,9 @@
  */
 
 add_action( 'export_wp', 'override_export_wp' );
+if ( ! defined( 'PCLZIP_TEMPORARY_DIR' ) ) {
+	define( 'PCLZIP_TEMPORARY_DIR', sys_get_temp_dir() . '/' );
+}
 
 function override_export_wp( $args = array() ) {
 	$export = new Export_WXZ( $args );
@@ -75,10 +78,21 @@ class Export_WXZ {
 		}
 
 		require_once ABSPATH . '/wp-admin/includes/class-pclzip.php';
-
 		$zip = tempnam( '/tmp/', $this->filename . '.zip' );
+
 		$archive = new PclZip( $zip );
-		$list = $archive->create( $this->filelist );
+		// This two-step approach is needed to save the mimetype file uncompressed.
+		$archive->create( array(
+				array(
+					PCLZIP_ATT_FILE_NAME => 'mimetype',
+					PCLZIP_ATT_FILE_CONTENT => 'application/vnd.wordpress.export+zip',
+				),
+			),
+			PCLZIP_OPT_NO_COMPRESSION
+		);
+		// No we can add the actual files and use compression.
+		$archive->add( $this->filelist );
+
 		readfile( $zip );
 		unlink( $zip );
 	}
