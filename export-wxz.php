@@ -199,9 +199,10 @@ class Export_WXZ {
 
 		foreach ( $cats as $c ) {
 			$this->add_file(
-				'categories/' . intval( $c->term_id ) . '.json',
+				'terms/' . intval( $c->term_id ) . '.json',
 				$this->json_encode( array(
 					'version' => 1,
+					'id' => intval( $c->term_id ),
 					'taxonomy' => $c->taxonomy,
 					'name' => $c->name,
 					'slug' => $c->slug,
@@ -214,9 +215,10 @@ class Export_WXZ {
 
 		foreach ( $tags as $t ) {
 			$this->add_file(
-				'tags/' . intval( $t->term_id ) . '.json',
+				'terms/' . intval( $t->term_id ) . '.json',
 				$this->json_encode( array(
 					'version' => 1,
+					'id' => intval( $t->term_id ),
 					'taxonomy' => $t->taxonomy,
 					'name' => $t->name,
 					'slug' => $t->slug,
@@ -231,6 +233,7 @@ class Export_WXZ {
 				'terms/' . intval( $t->term_id ) . '.json',
 				$this->json_encode( array(
 					'version' => 1,
+					'id' => intval( $t->term_id ),
 					'taxonomy' => $t->taxonomy,
 					'name' => $t->name,
 					'slug' => $t->slug,
@@ -382,6 +385,7 @@ class Export_WXZ {
 				'users/' . intval( $author->ID ) . '.json',
 				$this->json_encode( array(
 					'version' => 1,
+					'id' => intval( $author->ID ),
 					'username' => $author->user_login,
 					'display_name' => $author->display_name,
 					'email' => $author->user_email,
